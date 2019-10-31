@@ -129,6 +129,15 @@ app.get("/api/employees", (req, res) => {
    (See "CRUD with Mongoose - READ (single document)": https://ilearn.laccd.edu/courses/84651/pages/module-8-introduction-to-mongodb-and-mongoose)
    ====================================================================*/
 app.get("/api/employees/:id", (req, res) => {
+  var id = parseInt(req.params.id);
+
+  Employee.findById(id, function(err, result) {
+    if (!err) {
+      res.status(200).send(result);
+    } else {
+      res.status(500).send(err);
+    }
+  });
   //res.status(404).send("Not Implemented");
 });
 
@@ -145,7 +154,10 @@ app.put("/api/employees/:id", (req, res) => {
   Employee.findByIdAndUpdate(
     req.params.id,
     {
-      task: req.body.task
+      name: req.body.name,
+      email: req.body.email,
+      address: req.body.address,
+      phone: req.body.phone
     },
     {
       new: true,
