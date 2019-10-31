@@ -201,6 +201,13 @@ app.delete("/api/employees/:id", (req, res) => {
    (See "CRUD with Mongoose - DELETE (all documents)": https://ilearn.laccd.edu/courses/84651/pages/module-8-introduction-to-mongodb-and-mongoose)
    ====================================================================*/
 app.delete("/api/employees", (req, res) => {
+  Employee.remove({}, function(err, result) {
+    if (!err) {
+      res.status(200).send(result);
+    } else {
+      res.status(500).send(err);
+    }
+  });
   //res.status(404).send("Not Implemented");
 });
 
